@@ -231,13 +231,20 @@ couponCodesButton.addEventListener("click", () => {
   const couponInput = document.querySelector(".form-code");
 
   if (hasAppliedCoupon) {
-    const form = document.querySelector(".code-form");
+    const couponDiscountTitle = document.querySelector(".discount-title");
+    const couponError = document.querySelector(".coupon-error-container");
+
+    if (couponError) {
+      return;
+    }
 
     const hasAppliedCouponAlertContainer = document.createElement("div");
+    hasAppliedCouponAlertContainer.classList.add("coupon-error-container");
     const hasAppliedCouponAlert = document.createElement("p");
-    hasAppliedCouponAlert.innerText = "Enough is enough!";
+    hasAppliedCouponAlert.classList.add("text-danger", "p-1", "m-0");
+    hasAppliedCouponAlert.innerText = "Your discount has already been applied!";
     hasAppliedCouponAlertContainer.appendChild(hasAppliedCouponAlert);
-    form.appendChild(hasAppliedCouponAlertContainer);
+    couponDiscountTitle.appendChild(hasAppliedCouponAlertContainer);
     couponInput.classList.add("border-danger");
     return;
   }
@@ -254,16 +261,23 @@ couponCodesButton.addEventListener("click", () => {
     );
     priceWithoutDiscount.classList.add("text-decoration-line-through", "pe-2");
 
-    const verifyTheVirifyedCouponText = document.querySelector(".verify-text");
-    if (verifyTheVirifyedCouponText) {
-      verifyTheVirifyedCouponText.remove();
+    const couponError = document.querySelector(".coupon-error-container");
+    if (couponError) {
+      couponError.remove();
     }
   } else {
-    const verifyCouponDiscount = document.querySelector(".discount-title");
-    const verifyCoupons = document.createElement("p");
-    verifyCoupons.classList.add("text-danger", "p-1", "m-0", "verify-text");
-    verifyCoupons.innerText = "Please use one of the codes from below!";
-    verifyCouponDiscount.appendChild(verifyCoupons);
+    const couponError = document.querySelector(".coupon-error-container");
+    if (couponError) {
+      return;
+    }
+    const couponDiscountTitle = document.querySelector(".discount-title");
+    const couponErrorContainer = document.createElement("div");
+    couponErrorContainer.classList.add("coupon-error-container");
+    const couponErrorText = document.createElement("p");
+    couponErrorText.classList.add("text-danger", "p-1", "m-0");
+    couponErrorText.innerText = "Please use one of the codes from below!";
+    couponErrorContainer.appendChild(couponErrorText);
+    couponDiscountTitle.appendChild(couponErrorContainer);
     couponInput.classList.add("border-danger");
     couponInput.classList.remove("border-success");
     document.querySelector(".form-code").value = "";
