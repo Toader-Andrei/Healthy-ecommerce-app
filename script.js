@@ -1,3 +1,5 @@
+import { products } from "./fruits-and-vegetables.js";
+console.log(products);
 const dropDownMenu = document.querySelector(".dropdown-menu");
 const addToCartButtons = document.querySelectorAll(".add-cart");
 const productsDropDown = document.querySelector(".products-dd");
@@ -270,6 +272,35 @@ function verifyShoppingCart() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+  // aici trebuie facut
+  const productContainer = document.querySelector(".products");
+
+  const productTitleContainer = document.createElement("div");
+  productTitleContainer.classList.add(
+    "products-container",
+    "text-center",
+    "mt-5"
+  );
+
+  const productTitle = document.createElement("h1");
+  productTitle.innerText = "Our Products";
+  productTitleContainer.appendChild(productTitle);
+
+  const productUnderline = document.createElement("hr");
+  productUnderline.classList.add(
+    "border",
+    "border-success",
+    "border-3",
+    "opacity-75",
+    "w-25",
+    "mb-3"
+  );
+  productTitleContainer.appendChild(productUnderline);
+
+  productContainer.appendChild(productTitleContainer);
+
+  const productContainers = document.createElement("div");
+
   dropDownMenu.addEventListener("click", (event) => {
     event.stopPropagation();
   });

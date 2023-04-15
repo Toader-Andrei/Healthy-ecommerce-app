@@ -1,0 +1,58 @@
+export const products = [
+  {
+    name: "Strawberrys",
+    cost: 38.0,
+    image: "strawberry.jpg",
+    quantity: 1,
+    category: "fruits",
+  },
+  {
+    name: "Oranges",
+    cost: 37.0,
+    image: "orange.jpg",
+    quantity: 1,
+    category: "fruits",
+  },
+  {
+    name: "Tomatoes",
+    cost: 36.0,
+    image: "tomato.jpg",
+    quantity: 1,
+    category: "vegetables",
+  },
+  {
+    name: "Asparagus",
+    cost: 35.0,
+    image: "asparagus.jpg",
+    quantity: 1,
+    category: "vegetables",
+  },
+  {
+    name: "Cherries",
+    cost: 34.0,
+    image: "chesrries.jpg",
+    quantity: 1,
+    category: "fruits",
+  },
+  {
+    name: "Carrots",
+    cost: 33.0,
+    image: "carrots.jpg",
+    quantity: 1,
+    category: "vegetables",
+  },
+  {
+    name: "Bananas",
+    cost: 32.0,
+    image: "banana.jpg",
+    quantity: 1,
+    category: "fruits",
+  },
+  {
+    name: "Pears",
+    cost: 31.0,
+    image: "pear.jpg",
+    quantity: 1,
+    category: "fruits",
+  },
+];
