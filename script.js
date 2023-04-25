@@ -1,12 +1,11 @@
 import { products } from "./fruits-and-vegetables.js";
-console.log(products);
-const dropDownMenu = document.querySelector(".dropdown-menu");
+
+const dropDownList = document.querySelector(".dropdown-menu");
 const addToCartButtons = document.querySelectorAll(".add-cart");
 const productsDropDown = document.querySelector(".products-dd");
 const totalCostElement = document.querySelector(".total-money");
 
-const fruitsFromStorage = JSON.parse(localStorage.getItem("fruits")) || [];
-
+const productFromStorage = JSON.parse(localStorage.getItem("products")) || [];
 let count = 0;
 let totalCost = 0;
 
@@ -36,37 +35,39 @@ function onAddToCartClick(event) {
   const counter = document.querySelector(".counter");
   counter.innerText = count;
 
+  // text goes away
   emptyCartContainer.remove();
 
-  const fruitCard = event.target.parentElement.parentElement;
-  const fruitDetails = fruitCard.querySelector(".fruit-details");
-  const fruitImage = fruitCard
+  const productCard = event.target.parentElement.parentElement;
+  const productDetails = productCard.querySelector(".product-details");
+  const productImage = productCard
     .querySelector(".images-products")
     .getAttribute("src");
-  const fruitCost = parseInt(fruitCard.querySelector(".item-cost").innerText);
-  const fruitName = fruitCard.querySelector(".item-name").innerText;
-
+  const productCost = parseInt(
+    productCard.querySelector(".item-cost").innerText
+  );
+  const productName = productCard.querySelector(".item-name").innerText;
+  const productCategory = productCard.dataset.category;
   // total price
-  totalCost = totalCost + fruitCost;
+  totalCost = totalCost + productCost;
   totalCostElement.innerText = totalCost;
 
   //storage
-  const fruit = {
-    name: fruitName,
-    cost: fruitCost,
-    image: fruitImage,
+  const wantedProduct = {
+    name: productName,
+    cost: productCost,
+    image: productImage,
     quantity: 1,
+    category: productCategory,
   };
-
-  if (JSON.parse(localStorage.getItem("fruits"))) {
-    const myArray = JSON.parse(localStorage.getItem("fruits"));
-    myArray.push(fruit);
-    localStorage.setItem("fruits", JSON.stringify(myArray));
+  if (JSON.parse(localStorage.getItem("products"))) {
+    const myArray = JSON.parse(localStorage.getItem("products"));
+    myArray.push(wantedProduct);
+    localStorage.setItem("products", JSON.stringify(myArray));
   } else {
-    localStorage.setItem("fruits", JSON.stringify([fruit]));
+    localStorage.setItem("products", JSON.stringify([wantedProduct]));
   }
 
-  //create product in dropdown
   const item = document.createElement("li");
   item.classList.add(
     "container",
@@ -79,30 +80,30 @@ function onAddToCartClick(event) {
   );
   productsDropDown.appendChild(item);
 
-  const imageFruit = document.createElement("img");
-  imageFruit.setAttribute("src", fruitImage);
-  imageFruit.classList.add("product-image");
-  item.appendChild(imageFruit);
+  const imageProduct = document.createElement("img");
+  imageProduct.setAttribute("src", productImage);
+  imageProduct.classList.add("product-image");
+  item.appendChild(imageProduct);
 
-  const fruitContainer = document.createElement("div");
+  const productContainer = document.createElement("div");
   const itemName = document.createElement("p");
   itemName.classList.add("fruit-name");
-  itemName.innerText = fruitName;
-  fruitContainer.appendChild(itemName);
+  itemName.innerText = productName;
+  productContainer.appendChild(itemName);
 
   const itemPrice = document.createElement("p");
   itemPrice.classList.add("fruit-cost");
-  itemPrice.innerText = "$" + fruitCost + ".00";
-  fruitContainer.appendChild(itemPrice);
-  item.appendChild(fruitContainer);
+  itemPrice.innerText = "$" + productCost + ".00";
+  productContainer.appendChild(itemPrice);
+  item.appendChild(productContainer);
 
   const addedToCartButton = document.createElement("i");
   addedToCartButton.setAttribute(
     "class",
-    "fa-solid fa-circle-check text-success"
+    "fa-solid fa-circle-check text-success ps-1 "
   );
   event.target.remove();
-  fruitDetails.appendChild(addedToCartButton);
+  productDetails.appendChild(addedToCartButton);
 
   const trashContainer = document.createElement("div");
   trashContainer.classList.add("ms-auto", "p-2");
@@ -114,12 +115,12 @@ function onAddToCartClick(event) {
   item.appendChild(trashContainer);
 
   if (!document.querySelector(".navigate-button")) {
-    dropDownMenu.appendChild(navigateButtonContainer);
+    dropDownList.appendChild(navigateButtonContainer);
   }
 
-  // remove product
+  //remove product
   iconTrashCan.addEventListener("click", () => {
-    totalCost = totalCost - fruitCost;
+    totalCost = totalCost - productCost;
     totalCostElement.innerText = totalCost;
 
     item.remove();
@@ -128,7 +129,7 @@ function onAddToCartClick(event) {
 
     addedToCartButton.setAttribute(
       "class",
-      "fa-solid fa-cart-plus cursor-add-to-cart"
+      "fa-solid fa-cart-plus cursor-pointer ps-1"
     );
 
     addedToCartButton.addEventListener("click", (event) => {
@@ -140,54 +141,97 @@ function onAddToCartClick(event) {
     );
 
     if (totalProductsFromDropDown.length === 0) {
-      dropDownMenu.appendChild(emptyCartContainer);
+      dropDownList.appendChild(emptyCartContainer);
       navigateButtonContainer.remove();
     }
 
-    const storageFruits = JSON.parse(localStorage.getItem("fruits"));
-    const fruitIndex = storageFruits.findIndex(
-      (fruit) => fruit.name === fruitName
+    const storageProducts = JSON.parse(localStorage.getItem("products"));
+    const productIndex = storageProducts.findIndex(
+      (wantedproduct) => wantedproduct.name === productName
     );
-    storageFruits.splice(fruitIndex, 1);
-    localStorage.setItem("fruits", JSON.stringify(storageFruits));
+    storageProducts.splice(productIndex, 1);
+    localStorage.setItem("products", JSON.stringify(storageProducts));
   });
 }
 
-function verifyProductAddedToCartButton() {
-  fruitsFromStorage.forEach((fruit) => {
-    const fruitCard = document.querySelector(
-      '.fruit-card[data-fruit="' + fruit.name + '"]'
-    );
+function createProducts() {
+  products.forEach((product) => {
+    createProductCards(product);
+  });
+}
 
-    const addToCartButton = fruitCard.querySelector(".add-cart");
-    const fruitDetails = fruitCard.querySelector(".fruit-details");
+function createProductCards(product) {
+  const productsContainer = document.querySelector(".products-container");
 
-    addToCartButton.remove();
+  const productContainer = document.createElement("div");
+  productContainer.classList.add(
+    "product-card",
+    "col-xxl-3",
+    "col-md-6",
+    "col-12",
+    "mb-3"
+  );
+  productContainer.setAttribute("data-name", product.name);
+  productContainer.setAttribute("data-category", product.category);
 
-    const addedToCartButton = document.createElement("i");
-    addedToCartButton.setAttribute(
-      "class",
-      "fa-solid fa-circle-check text-success"
-    );
+  const productImage = document.createElement("img");
+  productImage.setAttribute("src", product.image);
+  productImage.setAttribute("alt", product.name);
+  productImage.classList.add("images-products");
 
-    fruitDetails.appendChild(addedToCartButton);
+  productContainer.appendChild(productImage);
+
+  const productDetails = document.createElement("div");
+  productDetails.classList.add("mt-4", "fs-5", "product-details");
+
+  const productName = document.createElement("p");
+  productName.classList.add("item-name");
+  productName.innerText = product.name;
+
+  productDetails.appendChild(productName);
+  productContainer.appendChild(productDetails);
+
+  const productValutePrice = document.createElement("b");
+  productValutePrice.innerText = "$";
+
+  const productPriceNumber = document.createElement("span");
+  productPriceNumber.classList.add("fs-5", "item-cost");
+  productPriceNumber.innerText = product.cost + ".00";
+
+  const trashContainer = document.createElement("div");
+  trashContainer.classList.add("ms-auto", "p-2");
+
+  const addedToCartButton = document.createElement("i");
+  addedToCartButton.setAttribute(
+    "class",
+    "fa-solid fa-cart-plus cursor-pointer add-cart ps-1"
+  );
+
+  productValutePrice.appendChild(productPriceNumber);
+  productDetails.appendChild(productValutePrice);
+  productDetails.appendChild(addedToCartButton);
+
+  productsContainer.appendChild(productContainer);
+
+  addedToCartButton.addEventListener("click", (event) => {
+    onAddToCartClick(event);
   });
 }
 
 function verifyShoppingCart() {
   const counter = document.querySelector(".counter");
-  count = fruitsFromStorage.length;
+  count = productFromStorage.length;
   counter.innerText = count;
 
   if (count === 0) {
-    dropDownMenu.appendChild(emptyCartContainer);
+    dropDownList.appendChild(emptyCartContainer);
   } else {
     emptyCartContainer.remove();
-    dropDownMenu.appendChild(navigateButtonContainer);
+    dropDownList.appendChild(navigateButtonContainer);
   }
 
-  fruitsFromStorage.forEach((fruit) => {
-    totalCost = totalCost + parseInt(fruit.cost);
+  productFromStorage.forEach((product) => {
+    totalCost = totalCost + parseInt(product.cost);
     totalCostElement.innerText = totalCost;
 
     //create product in dropdown
@@ -204,19 +248,19 @@ function verifyShoppingCart() {
     productsDropDown.appendChild(item);
 
     const imageFruit = document.createElement("img");
-    imageFruit.setAttribute("src", fruit.image);
+    imageFruit.setAttribute("src", product.image);
     imageFruit.classList.add("product-image");
     item.appendChild(imageFruit);
 
     const fruitContainer = document.createElement("div");
     const itemName = document.createElement("p");
     itemName.classList.add("fruit-name");
-    itemName.innerText = fruit.name;
+    itemName.innerText = product.name;
     fruitContainer.appendChild(itemName);
 
     const itemPrice = document.createElement("p");
     itemPrice.classList.add("fruit-cost");
-    itemPrice.innerText = "$" + fruit.cost + ".00";
+    itemPrice.innerText = "$" + product.cost + ".00";
     fruitContainer.appendChild(itemPrice);
     item.appendChild(fruitContainer);
 
@@ -231,12 +275,12 @@ function verifyShoppingCart() {
 
     // remove product
     iconTrashCan.addEventListener("click", () => {
-      const fruitCard = document.querySelector(
-        '.fruit-card[data-fruit="' + fruit.name + '"]'
+      const productCard = document.querySelector(
+        '.fruit-card[data-fruit="' + product.name + '"]'
       );
-      const addedToCartButton = fruitCard.querySelector("i.fa-circle-check");
+      const addedToCartButton = productCard.querySelector("i.fa-circle-check");
 
-      totalCost = totalCost - fruit.cost;
+      totalCost = totalCost - product.cost;
       totalCostElement.innerText = totalCost;
 
       item.remove();
@@ -245,7 +289,7 @@ function verifyShoppingCart() {
 
       addedToCartButton.setAttribute(
         "class",
-        "fa-solid fa-cart-plus cursor-add-to-cart"
+        "fa-solid fa-cart-plus cursor-pointer ps-1"
       );
 
       addedToCartButton.addEventListener("click", (event) => {
@@ -257,53 +301,51 @@ function verifyShoppingCart() {
       );
 
       if (totalProductsFromDropDown.length === 0) {
-        dropDownMenu.appendChild(emptyCartContainer);
+        dropDownList.appendChild(emptyCartContainer);
         navigateButtonContainer.remove();
       }
 
-      const storageFruits = JSON.parse(localStorage.getItem("fruits"));
-      const fruitIndex = storageFruits.findIndex(
-        (currentFruit) => currentFruit.name === fruit.name
+      const storageProducts = JSON.parse(localStorage.getItem("products"));
+      const productIndex = storageProducts.findIndex(
+        (currentFruit) => currentFruit.name === product.name
       );
-      storageFruits.splice(fruitIndex, 1);
-      localStorage.setItem("fruits", JSON.stringify(storageFruits));
+      storageProducts.splice(productIndex, 1);
+      localStorage.setItem("fruits", JSON.stringify(storageProducts));
     });
   });
 }
 
+function verifyProductAddedToCartButton() {
+  productFromStorage.forEach((product) => {
+    const productCard = document.querySelector(
+      '.product-card[data-name="' + product.name + '"]'
+    );
+
+    const addToCartButton = productCard.querySelector(".add-cart");
+    const productDetails = productCard.querySelector(".product-details");
+
+    addToCartButton.remove();
+
+    const addedToCartButton = document.createElement("i");
+    addedToCartButton.setAttribute(
+      "class",
+      "fa-solid fa-circle-check text-success"
+    );
+
+    productDetails.appendChild(addedToCartButton);
+  });
+}
+function sortByCategoryAll() {
+  const productsContainer = document.querySelector(".products-container");
+  productsContainer.innerHTML = "";
+}
+function sortByCategoryFruits() {}
+function sortByCategoryVegetables() {}
 window.addEventListener("DOMContentLoaded", () => {
-  // aici trebuie facut
-  const productContainer = document.querySelector(".products");
-
-  const productTitleContainer = document.createElement("div");
-  productTitleContainer.classList.add(
-    "products-container",
-    "text-center",
-    "mt-5"
-  );
-
-  const productTitle = document.createElement("h1");
-  productTitle.innerText = "Our Products";
-  productTitleContainer.appendChild(productTitle);
-
-  const productUnderline = document.createElement("hr");
-  productUnderline.classList.add(
-    "border",
-    "border-success",
-    "border-3",
-    "opacity-75",
-    "w-25",
-    "mb-3"
-  );
-  productTitleContainer.appendChild(productUnderline);
-
-  productContainer.appendChild(productTitleContainer);
-
-  const productContainers = document.createElement("div");
-
-  dropDownMenu.addEventListener("click", (event) => {
+  dropDownList.addEventListener("click", (event) => {
     event.stopPropagation();
   });
+  createProducts();
 
   verifyProductAddedToCartButton();
   verifyShoppingCart();

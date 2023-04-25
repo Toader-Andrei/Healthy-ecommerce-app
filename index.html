@@ -83,92 +83,22 @@
       <div class="container">
         <div class="products text-center mt-5">
           <div>
-          <h1>Our Products</h1>
-          <hr class="border border-success border-3 opacity-75 w-25 mb-5">
-            <div class="featured-product">
-              <ul class="d-flex justify-content-between flex-wrap mb-3">
-                <li><u>All</u></li>
-                <li>Fruits</li>
-                <li>Vegetables</li>
-              </ul>
+            <h1>Our Products</h1>
+            <hr class="border border-success border-3 opacity-75 w-25 mb-5">
+              <div class="featured-product">
+                <ul class="d-flex justify-content-between flex-wrap mb-3">
+                  <li onclick="sortByCategoryAll()">All Products</li>
+                  <li onclick="sortByCategoryFruits()">Fruits</li>
+                  <li onclick="sortByCategoryVegetables()">Vegetables</li>
+                </ul>
+              </div>
             </div>
-          </div>
             <div class="row mb-3 products-container">
-              <div class="fruit-card col-xxl-3 col-md-6 col-sm-12 mb-3" data-fruit="Strawberry">
-                <img src="strawberry.jpg" alt="strawberry" class="images-products">
-                <div class="mt-4 fs-5 fruit-details">
-                  <p class="item-name">Strawberry</p>
-                  <b>$</b><span class="fw-bold fs-5 item-cost">38.00</span>
-                  <i class="fa-solid fa-cart-plus add-cart cursor-add-to-cart "></i>
-                </div>
-              </div>
-              <div class="fruit-card col-xxl-3 col-md-6 col-sm-12 mb-3" data-fruit="Orange">
-                <img src="orange.jpg" alt="orange" class="images-products">
-                <div class="mt-4 fs-5 fruit-details">
-                  <p class="item-name">Orange</p>
-                  <b>$</b><span class="fw-bold fs-5 item-cost">37.00</span>
-                  <i class="fa-solid fa-cart-plus add-cart cursor-add-to-cart "></i>
-                </div>
-              </div>
-              <div class="fruit-card col-xxl-3 col-md-6 col-sm-12 mb-3" data-fruit="Pineapple">
-                <img src="pineapple.jpg" alt="pineapple" class="images-products">
-                <div class="mt-4 fs-5 fruit-details">
-                  <p class="item-name">Pineapple</p>
-                  <b>$</b><span class="fw-bold fs-5 item-cost">36.00</span>
-                  <i class="fa-solid fa-cart-plus add-cart cursor-add-to-cart "></i>
-                </div>
-              </div> 
-              <div class="fruit-card col-xxl-3 col-md-6 col-sm-12 mb-3" data-fruit="Cherries">
-                <img src="cherries.jpg" alt="cherries" class="images-products">
-                <div class="mt-4 fs-5 fruit-details">
-                  <p class="item-name">Cherries</p>
-                  <b>$</b><span class="fw-bold fs-5 item-cost">35.00</span>
-                  <i class="fa-solid fa-cart-plus add-cart cursor-add-to-cart"></i>
-                </div>
-              </div>
-            </div>
-          
-            <div class="row">
-              <div class="fruit-card col-xxl-3 col-md-6 col-sm-12 mb-3" data-fruit="Pear">
-                <img src="pear.jpg" alt="pear" class="images-products">
-                <div class="mt-4 fs-5 fruit-details">
-                  <p class="item-name">Pear</p>
-                  <b>$</b><span class="fw-bold fs-5 item-cost">34.00</span>
-                  <i class="fa-solid fa-cart-plus add-cart cursor-add-to-cart "></i>
-                </div>
-              </div>
-              <div class="fruit-card col-xxl-3 col-md-6 col-sm-12 mb-3" data-fruit="Lime">
-                <img src="lime.jpg" alt="lime" class="images-products">
-                <div class="mt-4 fs-5 fruit-details">
-                  <p class="item-name">Lime</p>
-                  <b>$</b><span class="fw-bold fs-5 item-cost">33.00</span>
-                  <i class="fa-solid fa-cart-plus add-cart cursor-add-to-cart "></i>
-                </div>
-              </div>
-              <div class="fruit-card col-xxl-3 col-md-6 col-sm-12 mb-3" data-fruit="Melons">
-                <img src="melons.jpg" alt="melons" class="images-products">
-                <div class="mt-4 fs-5 fruit-details">
-                  <p class="item-name">Melons</p>
-                 <b>$</b><span class="fw-bold fs-5 item-cost">32.00</span>
-                  <i class="fa-solid fa-cart-plus add-cart cursor-add-to-cart "></i>
-                </div>
-              </div> 
-              <div class="fruit-card col-xxl-3 col-md-6 col-sm-12 mb-3" data-fruit="Banana">
-                <img src="banana.jpg" alt="banana" class="images-products">
-                <div class="mt-4 fs-5 fruit-details">
-                  <p class="item-name">Banana</p>
-                  <b>$</b><span class="fw-bold fs-5 item-cost">31.00</span>
-                  <i class="fa-solid fa-cart-plus add-cart cursor-add-to-cart "></i>
-                </div>
-              </div>
+
             </div>
         </div>
-
       </div>
     </main>
-    <footer></footer>
-
-    
         <script
         src="https://kit.fontawesome.com/cbfe90fe3f.js"
         crossorigin="anonymous"
@@ -185,6 +115,5 @@
       ></script>
       <script type="module" src="fruits-and-vegetables.js" ></script>
       <script type="module" src="script.js"></script>
-    
   </body>
 </html>

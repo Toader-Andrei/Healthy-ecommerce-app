@@ -110,10 +110,12 @@ main .products .add-cart {
     font-weight: bold;
 }
 
-.cursor-add-to-cart {
+.cursor-pointer {
     cursor: pointer;
+    padding: 0px 3px;
+    font-size: 20px;
 }
-.cursor-add-to-cart:hover {
+.cursor-pointer:hover {
     color: #3CB371;
 }
 .cursor-trash-can {

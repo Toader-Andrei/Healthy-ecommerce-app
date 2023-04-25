@@ -1,6 +1,6 @@
 export const products = [
   {
-    name: "Strawberrys",
+    name: "Strawberries",
     cost: 38.0,
     image: "strawberry.jpg",
     quantity: 1,
@@ -30,7 +30,7 @@ export const products = [
   {
     name: "Cherries",
     cost: 34.0,
-    image: "chesrries.jpg",
+    image: "cherries.jpg",
     quantity: 1,
     category: "fruits",
   },
