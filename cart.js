@@ -1,4 +1,4 @@
-const fruits = JSON.parse(localStorage.getItem("fruits"));
+const products = JSON.parse(localStorage.getItem("products"));
 
 const subtotalPrice = document.querySelector(".subtotal-price");
 let subtotal = 0;
@@ -10,7 +10,7 @@ totalPrice.innerText = subtotal;
 let hasAppliedCoupon = false;
 
 function calculatePrices() {
-  const totalPriceElements = document.querySelectorAll(".fruit-total-price");
+  const totalPriceElements = document.querySelectorAll(".product-total-price");
 
   let updatetedSubtotal = 0;
 
@@ -62,48 +62,48 @@ function applyDiscountCode() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  fruits.forEach((fruit) => {
-    subtotal = subtotal + fruit.cost * fruit.quantity;
+  products.forEach((product) => {
+    subtotal = subtotal + product.cost * product.quantity;
     subtotalPrice.innerText = subtotal;
     totalPrice.innerText = subtotal;
 
     const productContainer = document.querySelector(".products-container");
 
-    const product = document.createElement("div");
-    product.classList.add("row", "product-item");
+    const productRow = document.createElement("div");
+    productRow.classList.add("row", "product-item");
 
-    const fruitImageContainer = document.createElement("div");
-    fruitImageContainer.classList.add(
+    const productImageContainer = document.createElement("div");
+    productImageContainer.classList.add(
       "col-3",
       "col-sm-4",
       "col-md-5",
       "col-lg-6",
-      "image-name-fruit",
+      "image-name-product",
       "mt-3",
       "d-flex",
       "flex-wrap"
     );
 
-    const fruitImage = document.createElement("img");
-    fruitImage.setAttribute("src", fruit.image);
-    fruitImage.setAttribute("alt", fruit.name);
-    fruitImage.classList.add("image-fruit");
-    product.appendChild(fruitImage);
+    const productImage = document.createElement("img");
+    productImage.setAttribute("src", product.image);
+    productImage.setAttribute("alt", product.name);
+    productImage.classList.add("image-product");
+    productRow.appendChild(productImage);
 
-    const fruitParagraf = document.createElement("p");
-    fruitParagraf.classList.add(
+    const productParagraf = document.createElement("p");
+    productParagraf.classList.add(
       "f20",
       "align-self-center",
       "ps-md-4",
       "product-name"
     );
-    fruitParagraf.innerText = fruit.name;
-    product.appendChild(fruitParagraf);
+    productParagraf.innerText = product.name;
+    productRow.appendChild(productParagraf);
 
-    fruitImageContainer.appendChild(fruitImage);
+    productImageContainer.appendChild(productImage);
 
-    const fruitPriceContainer = document.createElement("div");
-    fruitPriceContainer.classList.add(
+    const productPriceContainer = document.createElement("div");
+    productPriceContainer.classList.add(
       "col-3",
       "col-sm-2",
       "col-md-2",
@@ -113,19 +113,19 @@ window.addEventListener("DOMContentLoaded", () => {
       "f20"
     );
 
-    const fruitPrice = document.createElement("p");
-    fruitPrice.classList.add("mb-0");
-    fruitPrice.innerText = "$";
-    const fruitPriceText = document.createElement("span");
-    fruitPriceText.classList.add("fruit-price");
-    fruitPriceText.innerText = fruit.cost;
-    fruitPrice.appendChild(fruitPriceText);
-    fruitPriceContainer.appendChild(fruitPrice);
+    const productPrice = document.createElement("p");
+    productPrice.classList.add("mb-0");
+    productPrice.innerText = "$";
+    const productPriceText = document.createElement("span");
+    productPriceText.classList.add("product-price");
+    productPriceText.innerText = product.cost;
+    productPrice.appendChild(productPriceText);
+    productPriceContainer.appendChild(productPrice);
 
-    fruitImageContainer.appendChild(fruitParagraf);
+    productImageContainer.appendChild(productParagraf);
 
-    const fruitQuantity = document.createElement("div");
-    fruitQuantity.classList.add(
+    const productQuantity = document.createElement("div");
+    productQuantity.classList.add(
       "col-3",
       "col-sm-3",
       "col-md-2",
@@ -135,21 +135,21 @@ window.addEventListener("DOMContentLoaded", () => {
       "quantity"
     );
 
-    const fruitQuantityContainer = document.createElement("div");
-    fruitQuantityContainer.classList.add("product-q");
+    const productQuantityContainer = document.createElement("div");
+    productQuantityContainer.classList.add("product-q");
 
-    const fruitQuantityInput = document.createElement("input");
-    fruitQuantityInput.classList.add("quantity-products");
-    fruitQuantityInput.setAttribute("type", "number");
-    fruitQuantityInput.setAttribute("value", fruit.quantity);
-    fruitQuantityInput.setAttribute("class", "counter-input");
-    fruitQuantityInput.setAttribute("min", "1");
+    const productQuantityInput = document.createElement("input");
+    productQuantityInput.classList.add("quantity-products");
+    productQuantityInput.setAttribute("type", "number");
+    productQuantityInput.setAttribute("value", product.quantity);
+    productQuantityInput.setAttribute("class", "counter-input");
+    productQuantityInput.setAttribute("min", "1");
 
-    fruitQuantityContainer.appendChild(fruitQuantityInput);
-    fruitQuantity.appendChild(fruitQuantityContainer);
+    productQuantityContainer.appendChild(productQuantityInput);
+    productQuantity.appendChild(productQuantityContainer);
 
-    const fruitTotalCostContainer = document.createElement("div");
-    fruitTotalCostContainer.classList.add(
+    const productTotalCostContainer = document.createElement("div");
+    productTotalCostContainer.classList.add(
       "col-2",
       "col-sm-2",
       "col-md-2",
@@ -159,33 +159,33 @@ window.addEventListener("DOMContentLoaded", () => {
       "f20"
     );
 
-    const fruitTotalCostPriceText = document.createElement("p");
-    fruitTotalCostPriceText.classList.add("mb-0");
-    fruitTotalCostPriceText.innerText = "$";
+    const productTotalCostPriceText = document.createElement("p");
+    productTotalCostPriceText.classList.add("mb-0");
+    productTotalCostPriceText.innerText = "$";
 
-    const fruitTotalCostPriceSpan = document.createElement("span");
-    fruitTotalCostPriceSpan.classList.add("fruit-total-price");
-    fruitTotalCostPriceSpan.innerText = fruit.cost * fruit.quantity;
+    const productTotalCostPriceSpan = document.createElement("span");
+    productTotalCostPriceSpan.classList.add("product-total-price");
+    productTotalCostPriceSpan.innerText = product.cost * product.quantity;
 
-    fruitQuantityInput.addEventListener("input", (event) => {
-      fruitTotalCostPriceSpan.innerText =
-        parseInt(event.target.value) * fruit.cost;
+    productQuantityInput.addEventListener("input", (event) => {
+      productTotalCostPriceSpan.innerText =
+        parseInt(event.target.value) * product.cost;
 
       calculatePrices();
 
-      const storageFruits = JSON.parse(localStorage.getItem("fruits"));
-      const fruitIndex = storageFruits.findIndex(
-        (currentFruit) => fruit.name === currentFruit.name
+      const storageFruits = JSON.parse(localStorage.getItem("products"));
+      const productIndex = storageFruits.findIndex(
+        (currentFruit) => product.name === currentFruit.name
       );
-      storageFruits[fruitIndex].quantity = parseInt(event.target.value);
-      localStorage.setItem("fruits", JSON.stringify(storageFruits));
+      storageFruits[productIndex].quantity = parseInt(event.target.value);
+      localStorage.setItem("products", JSON.stringify(storageFruits));
     });
 
-    fruitTotalCostPriceText.appendChild(fruitTotalCostPriceSpan);
-    fruitTotalCostContainer.appendChild(fruitTotalCostPriceText);
+    productTotalCostPriceText.appendChild(productTotalCostPriceSpan);
+    productTotalCostContainer.appendChild(productTotalCostPriceText);
 
-    const fruitDeleteContainer = document.createElement("div");
-    fruitDeleteContainer.classList.add(
+    const productDeleteContainer = document.createElement("div");
+    productDeleteContainer.classList.add(
       "col-1",
       "col-sm-1",
       "col-md-1",
@@ -194,31 +194,31 @@ window.addEventListener("DOMContentLoaded", () => {
       "trash-btn"
     );
 
-    const fruitDeleteIcon = document.createElement("i");
-    fruitDeleteIcon.classList.add("fa-solid", "fa-trash-can");
+    const productDeleteIcon = document.createElement("i");
+    productDeleteIcon.classList.add("fa-solid", "fa-trash-can");
 
-    fruitDeleteContainer.appendChild(fruitDeleteIcon);
+    productDeleteContainer.appendChild(productDeleteIcon);
 
-    product.appendChild(fruitImageContainer);
-    product.appendChild(fruitPriceContainer);
-    product.appendChild(fruitQuantity);
-    product.appendChild(fruitTotalCostContainer);
-    product.appendChild(fruitDeleteContainer);
+    productRow.appendChild(productImageContainer);
+    productRow.appendChild(productPriceContainer);
+    productRow.appendChild(productQuantity);
+    productRow.appendChild(productTotalCostContainer);
+    productRow.appendChild(productDeleteContainer);
 
-    productContainer.appendChild(product);
+    productContainer.appendChild(productRow);
 
-    fruitDeleteIcon.addEventListener("click", () => {
-      product.remove();
+    productDeleteIcon.addEventListener("click", () => {
+      productRow.remove();
       calculatePrices();
 
-      const storageFruits = JSON.parse(localStorage.getItem("fruits"));
-      const fruitIndex = storageFruits.findIndex(
-        (fruits) => fruits.name === fruitParagraf.innerText
+      const storageFruits = JSON.parse(localStorage.getItem("products"));
+      const productIndex = storageFruits.findIndex(
+        (products) => products.name === productParagraf.innerText
       );
 
-      storageFruits.splice(fruitIndex, 1);
+      storageFruits.splice(productIndex, 1);
 
-      localStorage.setItem("fruits", JSON.stringify(storageFruits));
+      localStorage.setItem("products", JSON.stringify(storageFruits));
     });
   });
 });

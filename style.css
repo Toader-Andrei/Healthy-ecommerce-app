@@ -125,6 +125,9 @@ main .products .add-cart {
     color: red;
 }
 
+.active {
+    color: #3CB371;
+}
 @media (max-width: 991.98px) { 
     .all-departments {
         display: none;

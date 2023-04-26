@@ -276,7 +276,7 @@ function verifyShoppingCart() {
     // remove product
     iconTrashCan.addEventListener("click", () => {
       const productCard = document.querySelector(
-        '.fruit-card[data-fruit="' + product.name + '"]'
+        '.product-card[data-name="' + product.name + '"]'
       );
       const addedToCartButton = productCard.querySelector("i.fa-circle-check");
 
@@ -329,18 +329,60 @@ function verifyProductAddedToCartButton() {
     const addedToCartButton = document.createElement("i");
     addedToCartButton.setAttribute(
       "class",
-      "fa-solid fa-circle-check text-success"
+      "fa-solid fa-circle-check text-success ps-1"
     );
-
     productDetails.appendChild(addedToCartButton);
   });
 }
-function sortByCategoryAll() {
-  const productsContainer = document.querySelector(".products-container");
-  productsContainer.innerHTML = "";
+
+const productsContainer = document.querySelector(".products-container");
+
+const allProducts = document.querySelector(".all");
+const fruitsCategory = document.querySelector(".fruits");
+const vegetablesCategory = document.querySelector(".vegetables");
+
+const categories = document.querySelector(".categories");
+const categoriesList = categories.getElementsByClassName("cursor-pointer");
+for (var i = 0; i < categoriesList.length; i++) {
+  categoriesList[i].addEventListener("click", function () {
+    var currentCategory = document.getElementsByClassName("active");
+    currentCategory[0].className = currentCategory[0].className.replace(
+      " active",
+      ""
+    );
+    this.className += " active";
+  });
 }
-function sortByCategoryFruits() {}
-function sortByCategoryVegetables() {}
+
+allProducts.addEventListener("click", () => {
+  productsContainer.innerHTML = "";
+  const productsItems = products.filter(
+    (product) =>
+      product.category === "fruits" || product.category === "vegetables"
+  );
+  productsItems.forEach((product) => {
+    createProductCards(product);
+  });
+});
+
+fruitsCategory.addEventListener("click", () => {
+  const fruits = products.filter((product) => product.category === "fruits");
+  productsContainer.innerHTML = "";
+  fruits.forEach((fruit) => {
+    createProductCards(fruit);
+  });
+});
+
+vegetablesCategory.addEventListener("click", () => {
+  const vegetables = products.filter(
+    (product) => product.category === "vegetables"
+  );
+  productsContainer.innerHTML = "";
+  vegetables.forEach((vegetable) => {
+    createProductCards(vegetable);
+  });
+});
+
 window.addEventListener("DOMContentLoaded", () => {
   dropDownList.addEventListener("click", (event) => {
     event.stopPropagation();
