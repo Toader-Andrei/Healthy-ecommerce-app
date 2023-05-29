@@ -156,11 +156,11 @@ function onAddToCartClick(event) {
 
 function createProducts() {
   products.forEach((product) => {
-    createProductCards(product);
+    createProductCard(product);
   });
 }
 
-function createProductCards(product) {
+function createProductCard(product) {
   const productsContainer = document.querySelector(".products-container");
 
   const productContainer = document.createElement("div");
@@ -341,18 +341,14 @@ const allProducts = document.querySelector(".all");
 const fruitsCategory = document.querySelector(".fruits");
 const vegetablesCategory = document.querySelector(".vegetables");
 
-const categories = document.querySelector(".categories");
-const categoriesList = categories.getElementsByClassName("cursor-pointer");
-for (var i = 0; i < categoriesList.length; i++) {
-  categoriesList[i].addEventListener("click", function () {
-    var currentCategory = document.getElementsByClassName("active");
-    currentCategory[0].className = currentCategory[0].className.replace(
-      " active",
-      ""
-    );
-    this.className += " active";
+const categoriesList = document.querySelectorAll(".categories li");
+
+categoriesList.forEach((category) => {
+  category.addEventListener("click", (event) => {
+    categoriesList.forEach((list) => list.classList.remove("active"));
+    event.target.classList.add("active");
   });
-}
+});
 
 allProducts.addEventListener("click", () => {
   productsContainer.innerHTML = "";
@@ -361,7 +357,7 @@ allProducts.addEventListener("click", () => {
       product.category === "fruits" || product.category === "vegetables"
   );
   productsItems.forEach((product) => {
-    createProductCards(product);
+    createProductCard(product);
   });
 });
 
@@ -369,7 +365,7 @@ fruitsCategory.addEventListener("click", () => {
   const fruits = products.filter((product) => product.category === "fruits");
   productsContainer.innerHTML = "";
   fruits.forEach((fruit) => {
-    createProductCards(fruit);
+    createProductCard(fruit);
   });
 });
 
@@ -379,7 +375,7 @@ vegetablesCategory.addEventListener("click", () => {
   );
   productsContainer.innerHTML = "";
   vegetables.forEach((vegetable) => {
-    createProductCards(vegetable);
+    createProductCard(vegetable);
   });
 });
 
@@ -397,4 +393,12 @@ window.addEventListener("DOMContentLoaded", () => {
       onAddToCartClick(event);
     });
   });
+});
+
+const editButton = document.querySelector(".edit-button");
+editButton.addEventListener("click", (event) => {
+  const nameInput = document.querySelector(".name-input");
+  const nameUser = event.querySelector(".names");
+  console.log(nameUser);
+  nameInput.innerText = nameUser.value;
 });
