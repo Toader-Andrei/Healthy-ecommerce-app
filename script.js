@@ -395,10 +395,9 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-const editButton = document.querySelector(".edit-button");
-editButton.addEventListener("click", (event) => {
-  const nameInput = document.querySelector(".name-input");
-  const nameUser = event.querySelector(".names");
-  console.log(nameUser);
-  nameInput.innerText = nameUser.value;
-});
+// const editButton = document.querySelector(".edit-button");
+// editButton.addEventListener("click", (event) => {
+//   const nameInput = document.querySelector(".name-input");
+//   const nameUser = event.querySelector(".names");
+//   nameInput.innerText = nameUser.value;
+// });

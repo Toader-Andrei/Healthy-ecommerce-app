@@ -227,60 +227,52 @@ const discountCodes = ["EASTER20", "PROMO20", "SALE20"];
 
 const couponCodesButton = document.querySelector(".form-btn");
 couponCodesButton.addEventListener("click", () => {
-  const couponValue = document.querySelector(".form-code").value;
+  const couponValue = document.querySelector(".form-code").value.trim();
   const couponInput = document.querySelector(".form-code");
 
-  if (hasAppliedCoupon) {
+  const couponErrorContainer = document.querySelector(
+    ".coupon-error-container"
+  );
+  if (couponErrorContainer) {
+    couponErrorContainer.remove();
+    couponInput.classList.remove("border-danger");
+  }
+
+  if (couponValue === "") {
     const couponDiscountTitle = document.querySelector(".discount-title");
-    const couponError = document.querySelector(".coupon-error-container");
-
-    if (couponError) {
-      return;
-    }
-
-    const hasAppliedCouponAlertContainer = document.createElement("div");
-    hasAppliedCouponAlertContainer.classList.add("coupon-error-container");
-    const hasAppliedCouponAlert = document.createElement("p");
-    hasAppliedCouponAlert.classList.add("text-danger", "p-1", "m-0");
-    hasAppliedCouponAlert.innerText = "Your discount has already been applied!";
-    hasAppliedCouponAlertContainer.appendChild(hasAppliedCouponAlert);
-    couponDiscountTitle.appendChild(hasAppliedCouponAlertContainer);
+    const errorContainer = document.createElement("div");
+    errorContainer.classList.add("coupon-error-container");
+    const errorText = document.createElement("p");
+    errorText.classList.add("text-danger", "p-1", "m-0");
+    errorText.innerText =
+      "Câmpul este gol. Vă rugăm să introduceți un cod valid!";
+    errorContainer.appendChild(errorText);
+    couponDiscountTitle.appendChild(errorContainer);
     couponInput.classList.add("border-danger");
     return;
   }
 
-  if (discountCodes.includes(couponValue)) {
-    hasAppliedCoupon = true;
-    applyDiscountCode();
-    couponInput.classList.remove("border-danger");
-    couponInput.classList.add("border-success");
-    document.querySelector(".form-code").value = "";
-    couponInput.setAttribute("placeholder", "You're welcome!");
-    const priceWithoutDiscount = document.querySelector(
-      ".total-price-paragraf"
-    );
-    priceWithoutDiscount.classList.add("text-decoration-line-through", "pe-2");
-
-    const couponError = document.querySelector(".coupon-error-container");
-    if (couponError) {
-      couponError.remove();
-    }
-  } else {
-    const couponError = document.querySelector(".coupon-error-container");
-    if (couponError) {
-      return;
-    }
+  if (!discountCodes.includes(couponValue)) {
     const couponDiscountTitle = document.querySelector(".discount-title");
-    const couponErrorContainer = document.createElement("div");
-    couponErrorContainer.classList.add("coupon-error-container");
-    const couponErrorText = document.createElement("p");
-    couponErrorText.classList.add("text-danger", "p-1", "m-0");
-    couponErrorText.innerText = "Please use one of the codes from below!";
-    couponErrorContainer.appendChild(couponErrorText);
-    couponDiscountTitle.appendChild(couponErrorContainer);
+    const errorContainer = document.createElement("div");
+    errorContainer.classList.add("coupon-error-container");
+    const errorText = document.createElement("p");
+    errorText.classList.add("text-danger", "p-1", "m-0");
+    errorText.innerText =
+      "Codul introdus este greșit. Vă rugăm să folosiți unul din cele afișate mai jos!";
+    errorContainer.appendChild(errorText);
+    couponDiscountTitle.appendChild(errorContainer);
     couponInput.classList.add("border-danger");
-    couponInput.classList.remove("border-success");
-    document.querySelector(".form-code").value = "";
-    couponInput.setAttribute("placeholder", "Please use one of the codes");
+    return;
   }
+
+  hasAppliedCoupon = true;
+  applyDiscountCode();
+  couponInput.classList.remove("border-danger");
+  couponInput.classList.add("border-success");
+  document.querySelector(".form-code").value = "";
+  couponInput.setAttribute("placeholder", "Cod aplicat cu succes!");
+
+  const priceWithoutDiscount = document.querySelector(".total-price-paragraf");
+  priceWithoutDiscount.classList.add("text-decoration-line-through", "pe-2");
 });
